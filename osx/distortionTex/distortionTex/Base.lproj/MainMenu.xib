@@ -656,11 +656,6 @@
                 <rect key="frame" x="0.0" y="0.0" width="825" height="425"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" id="YcS-pi-HDs">
-                        <rect key="frame" x="18" y="155" width="262" height="262"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                        <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageAlignment="topLeft" imageScaling="proportionallyDown" imageFrameStyle="grayBezel" id="7Vd-9Z-Wti"/>
-                    </imageView>
                     <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" id="ARa-ZJ-8Wg">
                         <rect key="frame" x="282" y="155" width="262" height="262"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
@@ -720,6 +715,11 @@
                             <action selector="onPushButton:" target="-1" id="kJT-DA-ivl"/>
                         </connections>
                     </button>
+                    <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" id="bso-4p-F5B">
+                        <rect key="frame" x="11" y="155" width="262" height="262"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageAlignment="topLeft" imageFrameStyle="grayBezel" id="TEe-SI-Tiw"/>
+                    </imageView>
                 </subviews>
             </view>
         </window>
@@ -728,9 +728,9 @@
                 <outlet property="btnLoadDistortion" destination="vjR-qr-gtb" id="oQI-Xd-8XY"/>
                 <outlet property="btnLoadTestSource" destination="pNb-nf-9ze" id="hjV-Pp-zmy"/>
                 <outlet property="btnTest" destination="U6R-7i-Xe1" id="Xi2-GR-HSw"/>
-                <outlet property="imgTestSource" destination="YcS-pi-HDs" id="mjG-cP-pgz"/>
                 <outlet property="imgViewDistortion" destination="ARa-ZJ-8Wg" id="Vmd-mD-ryA"/>
                 <outlet property="imgViewTestDest" destination="FIR-zF-N2i" id="w5u-va-Rp8"/>
+                <outlet property="imgcellTest" destination="TEe-SI-Tiw" id="v8W-xc-jtO"/>
                 <outlet property="sliderPower" destination="8dj-tP-utf" id="gx3-Ep-qix"/>
                 <outlet property="sliderRadius" destination="g7P-E0-kKU" id="vqd-fr-dFG"/>
                 <outlet property="window" destination="371" id="532"/>
