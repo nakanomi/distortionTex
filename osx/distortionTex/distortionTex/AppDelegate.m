@@ -48,9 +48,7 @@
 			NSURL* url = [openPanel URL];
 			_imgTestSource = [[NSImage alloc] initWithContentsOfURL:url];
 			NSLog(@"w:%f, h:%f", _imgTestSource.size.width, _imgTestSource.size.height);
-			[self.imgcellTest setImage:_imgTestSource];
-			[self.imgViewTestDest setImage:_imgTestSource];
-			[self.imgViewDistortion setImage:_imgTestSource];
+			[self.imgcellTestSource setImage:_imgTestSource];
 		}
 		
 		

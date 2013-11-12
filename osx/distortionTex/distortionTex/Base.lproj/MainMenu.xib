@@ -730,7 +730,7 @@
                 <outlet property="btnTest" destination="U6R-7i-Xe1" id="Xi2-GR-HSw"/>
                 <outlet property="imgViewDistortion" destination="ARa-ZJ-8Wg" id="Vmd-mD-ryA"/>
                 <outlet property="imgViewTestDest" destination="FIR-zF-N2i" id="w5u-va-Rp8"/>
-                <outlet property="imgcellTest" destination="TEe-SI-Tiw" id="v8W-xc-jtO"/>
+                <outlet property="imgcellTestSource" destination="TEe-SI-Tiw" id="txf-3T-vXg"/>
                 <outlet property="sliderPower" destination="8dj-tP-utf" id="gx3-Ep-qix"/>
                 <outlet property="sliderRadius" destination="g7P-E0-kKU" id="vqd-fr-dFG"/>
                 <outlet property="window" destination="371" id="532"/>

@@ -19,7 +19,7 @@
 @property (unsafe_unretained) IBOutlet NSButton *btnTest;
 @property (unsafe_unretained) IBOutlet NSSlider *sliderPower;
 @property (unsafe_unretained) IBOutlet NSSlider *sliderRadius;
-@property (unsafe_unretained) IBOutlet NSImageCell *imgcellTest;
+@property (unsafe_unretained) IBOutlet NSImageCell *imgcellTestSource;
 
 @property (assign) IBOutlet NSWindow *window;
 
