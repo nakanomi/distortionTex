@@ -678,6 +678,9 @@
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" size="13" name="AquaKana"/>
                         </buttonCell>
+                        <connections>
+                            <action selector="onPushButton:" target="-1" id="KZC-8C-eWM"/>
+                        </connections>
                     </button>
                     <button verticalHuggingPriority="750" id="vjR-qr-gtb">
                         <rect key="frame" x="281" y="110" width="79" height="32"/>
@@ -686,16 +689,25 @@
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" size="13" name="AquaKana"/>
                         </buttonCell>
+                        <connections>
+                            <action selector="onPushButton:" target="-1" id="gzB-fn-RQR"/>
+                        </connections>
                     </button>
                     <slider verticalHuggingPriority="750" id="8dj-tP-utf">
                         <rect key="frame" x="283" y="89" width="96" height="21"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <sliderCell key="cell" state="on" alignment="left" maxValue="100" doubleValue="50" tickMarkPosition="above" sliderType="linear" id="aVD-fZ-vwC"/>
+                        <connections>
+                            <action selector="sliderChange:" target="-1" id="N9p-nI-WnJ"/>
+                        </connections>
                     </slider>
                     <slider verticalHuggingPriority="750" id="g7P-E0-kKU">
                         <rect key="frame" x="283" y="58" width="96" height="21"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <sliderCell key="cell" state="on" alignment="left" maxValue="100" doubleValue="50" tickMarkPosition="above" sliderType="linear" id="Uax-pu-dCt"/>
+                        <connections>
+                            <action selector="sliderChange:" target="-1" id="7jI-5o-Ib9"/>
+                        </connections>
                     </slider>
                     <button verticalHuggingPriority="750" id="U6R-7i-Xe1">
                         <rect key="frame" x="281" y="19" width="79" height="32"/>
@@ -704,6 +716,9 @@
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" size="13" name="AquaKana"/>
                         </buttonCell>
+                        <connections>
+                            <action selector="onPushButton:" target="-1" id="kJT-DA-ivl"/>
+                        </connections>
                     </button>
                 </subviews>
             </view>

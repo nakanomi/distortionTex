@@ -23,4 +23,7 @@
 
 @property (assign) IBOutlet NSWindow *window;
 
+- (IBAction)onPushButton:(id)sender;
+- (IBAction)sliderChange:(id)sender;
+
 @end
