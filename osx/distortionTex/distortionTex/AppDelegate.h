@@ -9,6 +9,17 @@
 #import <Cocoa/Cocoa.h>
 
 @interface AppDelegate : NSObject <NSApplicationDelegate>
+{
+	
+}
+@property (unsafe_unretained) IBOutlet NSImageView *imgViewTestSource;
+@property (unsafe_unretained) IBOutlet NSImageView *imgViewDistortion;
+@property (unsafe_unretained) IBOutlet NSImageView *imgViewTestDest;
+@property (unsafe_unretained) IBOutlet NSButton *btnLoadTestSource;
+@property (unsafe_unretained) IBOutlet NSButton *btnLoadDistortion;
+@property (unsafe_unretained) IBOutlet NSButton *btnTest;
+@property (unsafe_unretained) IBOutlet NSSlider *sliderPower;
+@property (unsafe_unretained) IBOutlet NSSlider *sliderRadius;
 
 @property (assign) IBOutlet NSWindow *window;
 

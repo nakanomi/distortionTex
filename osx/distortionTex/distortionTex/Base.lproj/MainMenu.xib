@@ -650,15 +650,74 @@
         <window title="distortionTex" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" animationBehavior="default" id="371">
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
-            <rect key="contentRect" x="335" y="390" width="480" height="360"/>
+            <rect key="contentRect" x="335" y="390" width="825" height="425"/>
             <rect key="screenRect" x="0.0" y="0.0" width="1920" height="1058"/>
             <view key="contentView" id="372">
-                <rect key="frame" x="0.0" y="0.0" width="480" height="360"/>
+                <rect key="frame" x="0.0" y="0.0" width="825" height="425"/>
                 <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" id="YcS-pi-HDs">
+                        <rect key="frame" x="18" y="155" width="262" height="262"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageAlignment="topLeft" imageScaling="proportionallyDown" imageFrameStyle="grayBezel" id="7Vd-9Z-Wti"/>
+                    </imageView>
+                    <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" id="ARa-ZJ-8Wg">
+                        <rect key="frame" x="282" y="155" width="262" height="262"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageAlignment="topLeft" imageScaling="proportionallyDown" imageFrameStyle="grayBezel" id="HTR-kZ-We4"/>
+                    </imageView>
+                    <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" id="FIR-zF-N2i">
+                        <rect key="frame" x="546" y="155" width="262" height="262"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageAlignment="topLeft" imageScaling="proportionallyDown" imageFrameStyle="grayBezel" id="q9k-9e-Bdd"/>
+                    </imageView>
+                    <button verticalHuggingPriority="750" id="pNb-nf-9ze">
+                        <rect key="frame" x="17" y="110" width="79" height="32"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <buttonCell key="cell" type="push" title="ロード" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="Rkb-q0-q1k">
+                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                            <font key="font" size="13" name="AquaKana"/>
+                        </buttonCell>
+                    </button>
+                    <button verticalHuggingPriority="750" id="vjR-qr-gtb">
+                        <rect key="frame" x="281" y="110" width="79" height="32"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <buttonCell key="cell" type="push" title="ロード" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="eCR-LD-4Rj">
+                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                            <font key="font" size="13" name="AquaKana"/>
+                        </buttonCell>
+                    </button>
+                    <slider verticalHuggingPriority="750" id="8dj-tP-utf">
+                        <rect key="frame" x="283" y="89" width="96" height="21"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <sliderCell key="cell" state="on" alignment="left" maxValue="100" doubleValue="50" tickMarkPosition="above" sliderType="linear" id="aVD-fZ-vwC"/>
+                    </slider>
+                    <slider verticalHuggingPriority="750" id="g7P-E0-kKU">
+                        <rect key="frame" x="283" y="58" width="96" height="21"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <sliderCell key="cell" state="on" alignment="left" maxValue="100" doubleValue="50" tickMarkPosition="above" sliderType="linear" id="Uax-pu-dCt"/>
+                    </slider>
+                    <button verticalHuggingPriority="750" id="U6R-7i-Xe1">
+                        <rect key="frame" x="281" y="19" width="79" height="32"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <buttonCell key="cell" type="push" title="テスト" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="SGt-f7-Gfx">
+                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                            <font key="font" size="13" name="AquaKana"/>
+                        </buttonCell>
+                    </button>
+                </subviews>
             </view>
         </window>
         <customObject id="494" customClass="AppDelegate">
             <connections>
+                <outlet property="btnLoadDistortion" destination="vjR-qr-gtb" id="oQI-Xd-8XY"/>
+                <outlet property="btnLoadTestSource" destination="pNb-nf-9ze" id="hjV-Pp-zmy"/>
+                <outlet property="btnTest" destination="U6R-7i-Xe1" id="Xi2-GR-HSw"/>
+                <outlet property="imgTestSource" destination="YcS-pi-HDs" id="mjG-cP-pgz"/>
+                <outlet property="imgViewDistortion" destination="ARa-ZJ-8Wg" id="Vmd-mD-ryA"/>
+                <outlet property="imgViewTestDest" destination="FIR-zF-N2i" id="w5u-va-Rp8"/>
+                <outlet property="sliderPower" destination="8dj-tP-utf" id="gx3-Ep-qix"/>
+                <outlet property="sliderRadius" destination="g7P-E0-kKU" id="vqd-fr-dFG"/>
                 <outlet property="window" destination="371" id="532"/>
             </connections>
         </customObject>
