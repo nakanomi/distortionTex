@@ -269,6 +269,9 @@
 		[self drawDistortionedImage];
 		
 	}
+	else if ([sender isEqual:self.btnSave]) {
+		
+	}
 }
 
 - (IBAction)sliderChange:(id)sender
@@ -279,6 +282,8 @@
 		NSLog(@"change power :%f", [slider floatValue]);
 		_power = [slider floatValue];
 		[self drawDistortionedImage];
+		NSString* strPower = [NSString stringWithFormat:@"強さ:%f", _power];
+		[self.lblPower setObjectValue:strPower];
 	}
 	else if ([sender isEqual:self.sliderRadius]) {
 		NSLog(@"change radius : %f", [slider floatValue]);
@@ -289,6 +294,8 @@
 		_imgDistortion = [self drawCircle];
 		[self.imgViewDistortion setImage:_imgDistortion];
 		[self drawDistortionedImage];
+		NSString* strRadius = [NSString stringWithFormat:@"半径:%f", _radius];
+		[self.lblRadius setObjectValue:strRadius];
 	}
 }
 

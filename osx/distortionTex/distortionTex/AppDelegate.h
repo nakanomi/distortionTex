@@ -20,6 +20,9 @@
 @property (unsafe_unretained) IBOutlet NSSlider *sliderPower;
 @property (unsafe_unretained) IBOutlet NSSlider *sliderRadius;
 @property (unsafe_unretained) IBOutlet NSImageCell *imgcellTestSource;
+@property (unsafe_unretained) IBOutlet NSButton *btnSave;
+@property (unsafe_unretained) IBOutlet NSTextField *lblPower;
+@property (unsafe_unretained) IBOutlet NSTextField *lblRadius;
 
 @property (assign) IBOutlet NSWindow *window;
 

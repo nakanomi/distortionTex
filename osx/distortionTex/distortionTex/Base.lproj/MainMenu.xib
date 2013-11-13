@@ -721,7 +721,7 @@
                         <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageAlignment="topLeft" imageFrameStyle="grayBezel" id="TEe-SI-Tiw"/>
                     </imageView>
                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" id="ddx-Tb-eqq">
-                        <rect key="frame" x="402" y="91" width="30" height="17"/>
+                        <rect key="frame" x="402" y="91" width="84" height="17"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="強さ" id="IPJ-EP-gFu">
                             <font key="font" size="13" name="AquaKana"/>
@@ -730,7 +730,7 @@
                         </textFieldCell>
                     </textField>
                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" id="ni3-Zc-vpM">
-                        <rect key="frame" x="402" y="60" width="30" height="17"/>
+                        <rect key="frame" x="402" y="60" width="84" height="17"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="半径" id="IzR-op-AIc">
                             <font key="font" size="13" name="AquaKana"/>
@@ -738,6 +738,17 @@
                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
                     </textField>
+                    <button verticalHuggingPriority="750" id="lZ1-GS-iqc">
+                        <rect key="frame" x="449" y="110" width="66" height="32"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <buttonCell key="cell" type="push" title="保存" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="1Bc-NY-WA8">
+                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                            <font key="font" size="13" name="AquaKana"/>
+                        </buttonCell>
+                        <connections>
+                            <action selector="onPushButton:" target="-1" id="h2r-ER-439"/>
+                        </connections>
+                    </button>
                 </subviews>
             </view>
         </window>
@@ -745,10 +756,13 @@
             <connections>
                 <outlet property="btnLoadDistortion" destination="vjR-qr-gtb" id="oQI-Xd-8XY"/>
                 <outlet property="btnLoadTestSource" destination="pNb-nf-9ze" id="hjV-Pp-zmy"/>
+                <outlet property="btnSave" destination="lZ1-GS-iqc" id="qTC-cC-szW"/>
                 <outlet property="btnTest" destination="U6R-7i-Xe1" id="Xi2-GR-HSw"/>
                 <outlet property="imgViewDistortion" destination="ARa-ZJ-8Wg" id="Vmd-mD-ryA"/>
                 <outlet property="imgViewTestDest" destination="FIR-zF-N2i" id="w5u-va-Rp8"/>
                 <outlet property="imgcellTestSource" destination="TEe-SI-Tiw" id="txf-3T-vXg"/>
+                <outlet property="lblPower" destination="ddx-Tb-eqq" id="gCo-Z5-qaq"/>
+                <outlet property="lblRadius" destination="ni3-Zc-vpM" id="grG-59-JBh"/>
                 <outlet property="sliderPower" destination="8dj-tP-utf" id="gx3-Ep-qix"/>
                 <outlet property="sliderRadius" destination="g7P-E0-kKU" id="vqd-fr-dFG"/>
                 <outlet property="window" destination="371" id="532"/>
