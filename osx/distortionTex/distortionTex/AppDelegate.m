@@ -15,6 +15,7 @@
 	NSImage* _imgTestSource;
 	NSImage* _imgDistortion;
 	NSImage* _imgTestDest;
+	float _power;
 }
 - (NSURL*)getFileUrlByOpenPanel;
 - (NSImage*)filterColorFromImage:(NSImage*)image retainColor:(NSString*)colorName;
@@ -33,6 +34,7 @@
 	[self.imgViewDistortion setImageScaling:NSScaleNone];
 	[self.imgcellTestSource setImageScaling:NSScaleNone];
 	[self.imgViewTestDest setImageScaling:NSScaleNone];
+	_power = [self.sliderPower floatValue];
 }
 
 - (NSURL*)getFileUrlByOpenPanel
@@ -121,10 +123,10 @@
 							float offsetX = 0.0;
 							float offsetY = 0.0;
 							r -= _RGB_CENTER;
-							offsetX = (r * 10.0);
+							offsetX = (r * _power);
 							
 							g -= _RGB_CENTER;
-							offsetY = (g * 10.0);
+							offsetY = (g * _power);
 							/*
 							NSLog(@"r:%f, g:%f, b:%f, offsetX:%f, offsetY:%f",
 								  r, g, b, offsetX, offsetY);
@@ -198,6 +200,8 @@
 	NSSlider* slider = (NSSlider*)sender;
 	if ([sender isEqual:self.sliderPower]) {
 		NSLog(@"change power :%f", [slider floatValue]);
+		_power = [slider floatValue];
+		[self drawDistortionedImage];
 	}
 	else if ([sender isEqual:self.sliderRadius]) {
 		NSLog(@"change radius : %f", [slider floatValue]);
