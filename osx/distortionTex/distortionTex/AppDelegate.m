@@ -8,6 +8,8 @@
 
 #import "AppDelegate.h"
 
+#define _RGB_CENTER	(128.0 / 255.0)
+
 @interface AppDelegate()
 {
 	NSImage* _imgTestSource;
@@ -93,11 +95,11 @@
 		if (_imgTestDest != nil) {
 			_imgTestDest = nil;
 		}
-		//if ((_imgTestSource != nil)&&(_imgDistortion != nil))
-		if ((_imgTestSource != nil))
+		if ((_imgTestSource != nil)&&(_imgDistortion != nil))
 		{
 			//
-			NSColor* color = [[NSColor alloc] init];
+			NSColor* colSource = [[NSColor alloc] init];
+			NSColor* colDistortion = [[NSColor alloc] init];
 			CGSize size = _imgTestSource.size;
 			// 何かしらのイメージが無いとNSBitmapImageRepを取得できない
 			// サイズなどを動的にしたい場合は描画する必要がある
@@ -106,11 +108,33 @@
 			NSImage* tmpImage = [[NSImage alloc] initWithContentsOfFile:filePath];
 			NSBitmapImageRep* outImageRep = [[NSBitmapImageRep alloc] initWithData:[tmpImage TIFFRepresentation]];
 			NSBitmapImageRep* inImageRep = [[NSBitmapImageRep alloc] initWithData:[_imgTestSource TIFFRepresentation]];
+			NSBitmapImageRep* distortionImageRep = [[NSBitmapImageRep alloc] initWithData:[_imgDistortion TIFFRepresentation]];
 			[tmpImage lockFocus];
 			for (int y = 0; y < size.height; y++) {
 				for (int x = 0; x < size.width; x++) {
-					color = [inImageRep colorAtX:x y:y];
-					[outImageRep setColor:color atX:x y:y];
+					colSource = [inImageRep colorAtX:x y:y];
+					colDistortion = [distortionImageRep colorAtX:x y:y];
+					{
+						CGFloat a, r, g, b;
+						[colDistortion getRed:&r green:&g blue:&b alpha:&a];
+						if (a != 0.0) {
+							float offsetX = 0.0;
+							float offsetY = 0.0;
+							r -= _RGB_CENTER;
+							offsetX = (r * 10.0);
+							
+							g -= _RGB_CENTER;
+							offsetY = (g * 10.0);
+							/*
+							NSLog(@"r:%f, g:%f, b:%f, offsetX:%f, offsetY:%f",
+								  r, g, b, offsetX, offsetY);
+							 */
+							colSource = [inImageRep colorAtX:(int)((float)x + offsetX)
+														   y:(int)((float)y + offsetY)];
+							
+						}
+						[outImageRep setColor:colSource atX:x y:y];
+					}
 				}
 			}
 			[tmpImage unlockFocus];
@@ -119,8 +143,10 @@
 			
 			tmpImage = nil;
 			outImageRep = nil;
+			distortionImageRep = nil;
 			inImageRep = nil;
-			color = nil;
+			colSource = nil;
+			colDistortion = nil;
 		}
 	}
 	@catch (NSException *exception) {
@@ -151,18 +177,16 @@
 	}
 	else if ([sender isEqual:self.btnTest]) {
 		NSLog(@"test");
-		/*
 		if (_imgDistortion != nil) {
 			_imgDistortion = nil;
 		}
 		url = [self getFileUrlByOpenPanel];
 		if (url != nil) {
-			NSImage* tmpImage = [[NSImage alloc] initWithContentsOfURL:url];
-			_imgDistortion = [self filterColorFromImage:tmpImage retainColor:@"red"];
+			//NSImage* tmpImage = [[NSImage alloc] initWithContentsOfURL:url];
+			//_imgDistortion = [self filterColorFromImage:tmpImage retainColor:@"red"];
+			_imgDistortion = [[NSImage alloc] initWithContentsOfURL:url];
 			[self.imgViewDistortion setImage:_imgDistortion];
-			tmpImage = nil;
 		}
-		 */
 		[self drawDistortionedImage];
 		
 	}
