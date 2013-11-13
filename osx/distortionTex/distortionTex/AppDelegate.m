@@ -16,10 +16,13 @@
 	NSImage* _imgDistortion;
 	NSImage* _imgTestDest;
 	float _power;
+	float _radius;
+	CGPoint _posCenter;
 }
 - (NSURL*)getFileUrlByOpenPanel;
 - (NSImage*)filterColorFromImage:(NSImage*)image retainColor:(NSString*)colorName;
 - (BOOL)drawDistortionedImage;
+- (NSImage*)drawCircle;
 @end
 #define _SIZE_WIDTH	256.0f
 #define _SIZE_HEIGHT	256.0f
@@ -35,6 +38,8 @@
 	[self.imgcellTestSource setImageScaling:NSScaleNone];
 	[self.imgViewTestDest setImageScaling:NSScaleNone];
 	_power = [self.sliderPower floatValue];
+	_radius = [self.sliderRadius floatValue];
+	_posCenter = CGPointMake(128.0, 128.0);
 }
 
 - (NSURL*)getFileUrlByOpenPanel
@@ -158,6 +163,46 @@
 	
 }
 
+- (NSImage*)drawCircle
+{
+	NSImage* imageResult = nil;
+	@try {
+		// 何かしらのイメージが無いとNSBitmapImageRepを取得できない
+		// サイズなどを動的にしたい場合は描画する必要がある
+		NSBundle* thisBundle = [NSBundle mainBundle];
+		NSString* filePath = [thisBundle pathForResource:@"transparent256x256" ofType:@"png"];
+		NSImage* tmpImage = [[NSImage alloc] initWithContentsOfFile:filePath];
+		NSColor* color = [[NSColor alloc] init];
+		NSBitmapImageRep* outImageRep = [[NSBitmapImageRep alloc] initWithData:[tmpImage TIFFRepresentation]];
+		[tmpImage lockFocus];
+		CGSize size = tmpImage.size;
+		CGPoint posCur = CGPointMake(0, 0);
+		for (int y = 0; y < size.height; y++) {
+			for (int x = 0; x < size.width; x++) {
+				posCur.x = (float)x;
+				posCur.y = (float)y;
+				float distX = posCur.x - _posCenter.x;
+				float distY = posCur.y - _posCenter.y;
+				float dist = (distX * distX) + (distY * distY);
+				dist = sqrtf(dist);
+				if (dist < _radius) {
+					[outImageRep setColor:[NSColor redColor] atX:x y:y];
+				}
+			}
+		}
+		[tmpImage lockFocus];
+		imageResult = [[NSImage alloc] initWithCGImage:[outImageRep CGImage] size:size];
+		
+		tmpImage = nil;
+		outImageRep = nil;
+		color = nil;
+	}
+	@catch (NSException *exception) {
+		NSLog(@"%s:exception:%@", __PRETTY_FUNCTION__, exception);
+	}
+	return imageResult;
+}
+
 
 #pragma mark -Event
 - (IBAction)onPushButton:(id)sender
@@ -205,6 +250,13 @@
 	}
 	else if ([sender isEqual:self.sliderRadius]) {
 		NSLog(@"change radius : %f", [slider floatValue]);
+		_radius = [slider floatValue];
+		if (_imgDistortion != nil) {
+			_imgDistortion = nil;
+		}
+		_imgDistortion = [self drawCircle];
+		[self.imgViewDistortion setImage:_imgDistortion];
+		[self drawDistortionedImage];
 	}
 }
 
