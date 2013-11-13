@@ -14,8 +14,7 @@
 	NSImage* _imgDistortion;
 	NSImage* _imgTestDest;
 }
-- (NSURL*)getFileUrl;
-- (void)drawTest:(NSCustomImageRep*)customRep;
+- (NSURL*)getFileUrlByOpenPanel;
 - (NSImage*)filterColorFromImage:(NSImage*)image retainColor:(NSString*)colorName;
 @end
 #define _SIZE_WIDTH	256.0f
@@ -33,7 +32,7 @@
 	[self.imgViewTestDest setImageScaling:NSScaleNone];
 }
 
-- (NSURL*)getFileUrl
+- (NSURL*)getFileUrlByOpenPanel
 {
 	NSURL* url = nil;
 	// ファイルタイプのフィルター
@@ -53,17 +52,7 @@
 	return url;
 }
 
-- (void)drawTest:(NSCustomImageRep*)customRep
-{
-	NSLog(@"%s", __PRETTY_FUNCTION__);
-	[[NSColor blueColor] set];
-	NSRect rect;
-	rect.origin = NSZeroPoint;
-	rect.size = _imgDistortion.size;
-	NSRectFill(rect );
 
-
-}
 // http://www.mindfiresolutions.com/Filtering-colors-from-images-and-creating-a-new-image-from-filtered-color-1592.php
 - (NSImage*)filterColorFromImage:(NSImage*)image retainColor:(NSString*)colorName
 {
@@ -104,7 +93,7 @@
 	NSLog(@"%s", __PRETTY_FUNCTION__);
 	if ([sender isEqual:self.btnLoadTestSource] ) {
 		NSLog(@"load test source");
-		url = [self getFileUrl];
+		url = [self getFileUrlByOpenPanel];
 		if (url != nil) {
 			_imgTestSource = [[NSImage alloc] initWithContentsOfURL:url];
 			NSLog(@"w:%f, h:%f", _imgTestSource.size.width, _imgTestSource.size.height);
@@ -120,7 +109,7 @@
 		if (_imgDistortion != nil) {
 			_imgDistortion = nil;
 		}
-		url = [self getFileUrl];
+		url = [self getFileUrlByOpenPanel];
 		if (url != nil) {
 			NSImage* tmpImage = [[NSImage alloc] initWithContentsOfURL:url];
 			_imgDistortion = [self filterColorFromImage:tmpImage retainColor:@"red"];
