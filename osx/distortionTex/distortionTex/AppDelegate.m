@@ -272,12 +272,19 @@
 	else if ([sender isEqual:self.btnSave]) {
 		if (_imgDistortion != nil) {
 			NSSavePanel* savePanel = [NSSavePanel savePanel];
-			NSArray* allowedFileTypes = [NSArray arrayWithObjects:@"tiff", nil];
+			NSArray* allowedFileTypes = [NSArray arrayWithObjects:@"png", nil];
 			[savePanel setAllowedFileTypes:allowedFileTypes];
 			NSInteger panelResult = [savePanel runModal];
 			if (panelResult == NSOKButton) {
 				NSURL* url = [savePanel URL];
-				[[_imgDistortion TIFFRepresentation] writeToURL:url atomically:YES];
+				//[[_imgDistortion TIFFRepresentation] writeToURL:url atomically:YES];
+				CGImageRef cgRef = [_imgDistortion CGImageForProposedRect:NULL
+																  context:nil
+																	hints:nil];
+				NSBitmapImageRep* newRep = [[NSBitmapImageRep alloc] initWithCGImage:cgRef];
+				NSData* pngData = [newRep representationUsingType:NSPNGFileType
+													   properties:nil];
+				[pngData writeToURL:url atomically:YES];
 			}
 		}
 	}
