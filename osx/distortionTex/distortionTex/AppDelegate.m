@@ -136,10 +136,6 @@
 							NSLog(@"r:%f, g:%f, b:%f, offsetX:%f, offsetY:%f",
 								  r, g, b, offsetX, offsetY);
 							 */
-							if (offsetY != 0.0) {
-								NSLog(@"r:%f, g:%f, b:%f, offsetX:%f, offsetY:%f",
-									  r, g, b, offsetX, offsetY);
-							}
 							colSource = [inImageRep colorAtX:(int)((float)x + offsetX)
 														   y:(int)((float)y + offsetY)];
 							
@@ -190,23 +186,36 @@
 				float dist = (distX * distX) + (distY * distY);
 				dist = sqrtf(dist);
 				BOOL isLeft = YES;
+				BOOL isUpper = YES;
 				if (distX > 0.0) {
 					isLeft = NO;
+				}
+				if (distY > 0.0) {
+					isUpper = NO;
 				}
 				if (dist < _radius) {
 					float theta = 1.0 - (dist / _radius);
 					theta *= M_PI_2;
-					float red = sinf(theta);
+					float power = sinf(theta);
+					float red = _RGB_CENTER;
+					float green = _RGB_CENTER;
 					if (isLeft) {
-						red *= 1.0 - _RGB_CENTER;
+						red = power * (1.0 - _RGB_CENTER);
 						red += _RGB_CENTER;
 					}
 					else {
-						red *= _RGB_CENTER - 1.0;
+						red = power * (_RGB_CENTER - 1.0);
 						red += _RGB_CENTER;
 					}
+					if (isUpper) {
+						green = power * (1.0 - _RGB_CENTER);
+						green += _RGB_CENTER;
+					}
+					else {
+						green = power * (_RGB_CENTER - 1.0);
+						green += _RGB_CENTER;
+					}
 					
-					float green = _RGB_CENTER;
 					color = [NSColor colorWithCalibratedRed:red green:green blue:0.0 alpha:1.0];
 					[outImageRep setColor:color atX:x y:y];
 					color = nil;
