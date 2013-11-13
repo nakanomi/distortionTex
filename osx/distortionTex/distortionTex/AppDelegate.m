@@ -136,6 +136,10 @@
 							NSLog(@"r:%f, g:%f, b:%f, offsetX:%f, offsetY:%f",
 								  r, g, b, offsetX, offsetY);
 							 */
+							if (offsetY != 0.0) {
+								NSLog(@"r:%f, g:%f, b:%f, offsetX:%f, offsetY:%f",
+									  r, g, b, offsetX, offsetY);
+							}
 							colSource = [inImageRep colorAtX:(int)((float)x + offsetX)
 														   y:(int)((float)y + offsetY)];
 							
@@ -172,7 +176,7 @@
 		NSBundle* thisBundle = [NSBundle mainBundle];
 		NSString* filePath = [thisBundle pathForResource:@"transparent256x256" ofType:@"png"];
 		NSImage* tmpImage = [[NSImage alloc] initWithContentsOfFile:filePath];
-		NSColor* color = [[NSColor alloc] init];
+		NSColor* color = nil;
 		NSBitmapImageRep* outImageRep = [[NSBitmapImageRep alloc] initWithData:[tmpImage TIFFRepresentation]];
 		[tmpImage lockFocus];
 		CGSize size = tmpImage.size;
@@ -185,8 +189,27 @@
 				float distY = posCur.y - _posCenter.y;
 				float dist = (distX * distX) + (distY * distY);
 				dist = sqrtf(dist);
+				BOOL isLeft = YES;
+				if (distX > 0.0) {
+					isLeft = NO;
+				}
 				if (dist < _radius) {
-					[outImageRep setColor:[NSColor redColor] atX:x y:y];
+					float theta = 1.0 - (dist / _radius);
+					theta *= M_PI_2;
+					float red = sinf(theta);
+					if (isLeft) {
+						red *= 1.0 - _RGB_CENTER;
+						red += _RGB_CENTER;
+					}
+					else {
+						red *= _RGB_CENTER - 1.0;
+						red += _RGB_CENTER;
+					}
+					
+					float green = _RGB_CENTER;
+					color = [NSColor colorWithCalibratedRed:red green:green blue:0.0 alpha:1.0];
+					[outImageRep setColor:color atX:x y:y];
+					color = nil;
 				}
 			}
 		}
