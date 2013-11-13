@@ -16,6 +16,7 @@
 }
 - (NSURL*)getFileUrl;
 - (void)drawTest:(NSCustomImageRep*)customRep;
+- (NSImage*)filterColorFromImage:(NSImage*)image retainColor:(NSString*)colorName;
 @end
 #define _SIZE_WIDTH	256.0f
 #define _SIZE_HEIGHT	256.0f
@@ -55,11 +56,43 @@
 - (void)drawTest:(NSCustomImageRep*)customRep
 {
 	NSLog(@"%s", __PRETTY_FUNCTION__);
-	[[NSColor redColor] set];
+	[[NSColor blueColor] set];
 	NSRect rect;
 	rect.origin = NSZeroPoint;
 	rect.size = _imgDistortion.size;
 	NSRectFill(rect );
+
+
+}
+// http://www.mindfiresolutions.com/Filtering-colors-from-images-and-creating-a-new-image-from-filtered-color-1592.php
+- (NSImage*)filterColorFromImage:(NSImage*)image retainColor:(NSString*)colorName
+{
+	NSSize size = image.size;
+	NSColor* color = [[NSColor alloc] init];
+	
+	//NSBitmapImageRep* imageRep = [NSBitmapImageRepimageRepWithData:[image TIFFRepresentation]];
+	NSBitmapImageRep* imageRep = [[NSBitmapImageRep alloc] initWithData:[image TIFFRepresentation]];
+	
+	[image lockFocus];
+	
+	if ([colorName caseInsensitiveCompare:@"red"] == NSOrderedSame) {
+		for (int x = 0; x < size.width; x++) {
+			for (int y = 0; y < size.height; y++) {
+				color = NSReadPixel(NSMakePoint(x, y));
+				NSColor* fColor = [NSColor colorWithDeviceRed:[color redComponent]
+														green:0.0
+														 blue:0.0
+														alpha:[color alphaComponent]];
+				[imageRep setColor:fColor atX:x y:y];
+			}
+		}
+	}
+	// blue green skip
+	
+	[image unlockFocus];
+	NSImage* filteredImage = [[NSImage alloc] initWithCGImage:[imageRep CGImage] size:size];
+	
+	return filteredImage;
 }
 
 
@@ -84,15 +117,17 @@
 	}
 	else if ([sender isEqual:self.btnTest]) {
 		NSLog(@"test");
-		if (_imgDistortion == nil) {
-			NSSize size = CGSizeMake(_SIZE_WIDTH, _SIZE_HEIGHT);
-			_imgDistortion = [[NSImage alloc] initWithSize:size];
-			NSCustomImageRep* customRep = [[NSCustomImageRep alloc] initWithDrawSelector:@selector(drawTest:)
-																				delegate:self];
-			[_imgDistortion addRepresentation:customRep];
-			
+		if (_imgDistortion != nil) {
+			_imgDistortion = nil;
 		}
-		[self.imgViewDistortion setImage:_imgDistortion];
+		url = [self getFileUrl];
+		if (url != nil) {
+			NSImage* tmpImage = [[NSImage alloc] initWithContentsOfURL:url];
+			_imgDistortion = [self filterColorFromImage:tmpImage retainColor:@"red"];
+			[self.imgViewDistortion setImage:_imgDistortion];
+			tmpImage = nil;
+		}
+		
 	}
 }
 
