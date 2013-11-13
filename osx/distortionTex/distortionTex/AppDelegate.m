@@ -16,6 +16,7 @@
 }
 - (NSURL*)getFileUrlByOpenPanel;
 - (NSImage*)filterColorFromImage:(NSImage*)image retainColor:(NSString*)colorName;
+- (BOOL)drawDistortionedImage;
 @end
 #define _SIZE_WIDTH	256.0f
 #define _SIZE_HEIGHT	256.0f
@@ -84,6 +85,50 @@
 	return filteredImage;
 }
 
+#pragma mark -Draw
+- (BOOL)drawDistortionedImage
+{
+	BOOL result = NO;
+	@try {
+		if (_imgTestDest != nil) {
+			_imgTestDest = nil;
+		}
+		//if ((_imgTestSource != nil)&&(_imgDistortion != nil))
+		if ((_imgTestSource != nil))
+		{
+			//
+			NSColor* color = [[NSColor alloc] init];
+			CGSize size = _imgTestSource.size;
+			// 何かしらのイメージが無いとNSBitmapImageRepを取得できない
+			// サイズなどを動的にしたい場合は描画する必要がある
+			NSBundle* thisBundle = [NSBundle mainBundle];
+			NSString* filePath = [thisBundle pathForResource:@"white256x256" ofType:@"png"];
+			NSImage* tmpImage = [[NSImage alloc] initWithContentsOfFile:filePath];
+			NSBitmapImageRep* outImageRep = [[NSBitmapImageRep alloc] initWithData:[tmpImage TIFFRepresentation]];
+			NSBitmapImageRep* inImageRep = [[NSBitmapImageRep alloc] initWithData:[_imgTestSource TIFFRepresentation]];
+			[tmpImage lockFocus];
+			for (int y = 0; y < size.height; y++) {
+				for (int x = 0; x < size.width; x++) {
+					color = [inImageRep colorAtX:x y:y];
+					[outImageRep setColor:color atX:x y:y];
+				}
+			}
+			[tmpImage unlockFocus];
+			_imgTestDest = [[NSImage alloc] initWithCGImage:[outImageRep CGImage] size:size];
+			[self.imgViewTestDest setImage:_imgTestDest];
+			
+			tmpImage = nil;
+			outImageRep = nil;
+			inImageRep = nil;
+			color = nil;
+		}
+	}
+	@catch (NSException *exception) {
+		NSLog(@"%s:exception:%@", __PRETTY_FUNCTION__, exception);
+	}
+	return result;
+	
+}
 
 
 #pragma mark -Event
@@ -106,6 +151,7 @@
 	}
 	else if ([sender isEqual:self.btnTest]) {
 		NSLog(@"test");
+		/*
 		if (_imgDistortion != nil) {
 			_imgDistortion = nil;
 		}
@@ -116,6 +162,8 @@
 			[self.imgViewDistortion setImage:_imgDistortion];
 			tmpImage = nil;
 		}
+		 */
+		[self drawDistortionedImage];
 		
 	}
 }
