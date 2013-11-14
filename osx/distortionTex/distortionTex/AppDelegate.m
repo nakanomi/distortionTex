@@ -25,6 +25,9 @@
 - (NSImage*)filterColorFromImage:(NSImage*)image retainColor:(NSString*)colorName;
 - (BOOL)drawDistortionedImage;
 - (NSImage*)drawCircle;
+- (void)test;
+- (void)calcMtxMultiplyVec:(float*)vSrc matrix:(float*)mtx result:(float*)vResult;
+- (void)logMtx:(float*)mtx;
 @end
 #define _SIZE_WIDTH	256.0f
 #define _SIZE_HEIGHT	256.0f
@@ -237,7 +240,96 @@
 	}
 	return imageResult;
 }
+#pragma mark -Test
+- (void)logMtx:(float*)mtx
+{
+	for (int row = 0; row < 4; row++) {
+		int base = row * 4;
+		NSLog(@"%f, %f, %f, %f", mtx[base], mtx[base + 1], mtx[base + 2], mtx[base + 3]);
+	}
+}
 
+- (void)test
+{
+	float mtxPerse[16];
+	float nearZ = 5.0;
+	float farZ = 10000.0;
+	mtxLoadPerspective(mtxPerse, 90.0, 1.0, nearZ, farZ);
+	[self logMtx:mtxPerse];
+	NSLog(@"%s", __PRETTY_FUNCTION__);
+	{
+		float mtxTest[16];
+		mtxLoadIdentity(mtxTest);
+		mtxLoadRotateZ(mtxTest, M_PI_2);
+		mtxLoadScale(mtxTest, 2.0, 2.0, 2.0);
+		float vTest[4];
+		vTest[0] = 1.0;
+		vTest[1] = 2.0;
+		vTest[2] = 8.0;
+		vTest[3] = 1.0;
+		
+		float vResult[4];
+		[self logMtx:mtxTest];
+		[self calcMtxMultiplyVec:vTest matrix:mtxPerse result:vResult];
+		//[self calcMtxMultiplyVec:vTest matrix:mtxTest result:vResult];
+		NSLog(@"%f, %f, %f, %f", vResult[0], vResult[1], vResult[2], vResult[3]);
+		NSLog(@"%f, %f, %f, %f", vResult[0] / vResult[3], vResult[1] / vResult[3], vResult[2]/ vResult[3], vResult[3]/ vResult[3]);
+		float x = 1.0;
+		float y = 1.0;
+		float z1 = nearZ + 1.0;
+		float z2 = nearZ + 10.0;
+		float positions[32] = {
+			-x, y, z1, 1.0,
+			x,  y, z1, 1.0,
+			-x,-y, z1, 1.0,
+			x, -y, z1, 1.0,
+
+			-x, y, z2, 1.0,
+			x,  y, z2, 1.0,
+			-x,-y, z2, 1.0,
+			x, -y, z2, 1.0,
+		};
+		for (int i = 0; i < 32; i += 4) {
+			[self calcMtxMultiplyVec:&positions[i] matrix:mtxPerse result:vResult];
+			NSLog(@"%f, %f", (vResult[0] * 1000.0)  / vResult[3], (vResult[1] * 1000.0) / vResult[3]);
+		}
+	}
+	
+}
+#pragma mark -Calc
+- (void)calcMtxMultiplyVec:(float*)vSrc matrix:(float*)mtx result:(float*)vResult
+{
+#if 0
+	float mtxFromVec[16];
+	for (int i = 0; i < 16; i++) {
+		mtxFromVec[i] = 0.0;
+	}
+	mtxLoadIdentity(mtxFromVec);
+	for (int i = 0; i < 3; i++) {
+		NSLog(@"%f", vSrc[i]);
+		mtxFromVec[i + 12] = vSrc[i];
+	}
+	mtxFromVec[15] = 1.0;
+	float mtxRet[16];
+	mtxMultiply(mtxRet, mtx, mtxFromVec);
+	[self logMtx:mtxRet];
+	for (int i = 0; i < 3; i++) {
+		vResult[i] = mtxRet[i + 12];
+	}
+	vResult[3] = 1.0;
+#else
+	for (int i = 0; i < 4; i++) {
+		float tmpVal = 0.0;
+		for (int j = 0; j < 4; j++) {
+			int indexMtx = i * 4 + j;
+			float vVal = vSrc[j];
+			float mtxIJ = mtx[indexMtx];
+			tmpVal += vVal * mtxIJ;
+		}
+		vResult[i] = tmpVal;
+	}
+#endif
+}
 
 #pragma mark -Event
 - (IBAction)onPushButton:(id)sender
@@ -259,6 +351,7 @@
 	}
 	else if ([sender isEqual:self.btnTest]) {
 		NSLog(@"test");
+		/*
 		if (_imgDistortion != nil) {
 			_imgDistortion = nil;
 		}
@@ -270,6 +363,8 @@
 			[self.imgViewDistortion setImage:_imgDistortion];
 		}
 		[self drawDistortionedImage];
+		 */
+		[self test];
 		
 	}
 	else if ([sender isEqual:self.btnSave]) {
