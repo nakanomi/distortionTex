@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="4510" systemVersion="13A603" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="4514" systemVersion="13A603" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none">
     <dependencies>
         <deployment defaultVersion="1060" identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="4510"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="4514"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="NSApplication">
@@ -650,24 +650,19 @@
         <window title="distortionTex" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" animationBehavior="default" id="371">
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
-            <rect key="contentRect" x="335" y="390" width="825" height="425"/>
+            <rect key="contentRect" x="335" y="390" width="917" height="449"/>
             <rect key="screenRect" x="0.0" y="0.0" width="1920" height="1058"/>
             <view key="contentView" id="372">
-                <rect key="frame" x="0.0" y="0.0" width="825" height="425"/>
+                <rect key="frame" x="0.0" y="0.0" width="917" height="449"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" id="ARa-ZJ-8Wg">
-                        <rect key="frame" x="282" y="155" width="262" height="262"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                        <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageAlignment="topLeft" imageScaling="proportionallyDown" imageFrameStyle="grayBezel" id="HTR-kZ-We4"/>
-                    </imageView>
                     <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" id="FIR-zF-N2i">
-                        <rect key="frame" x="546" y="155" width="262" height="262"/>
+                        <rect key="frame" x="638" y="179" width="262" height="262"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageAlignment="topLeft" imageScaling="proportionallyDown" imageFrameStyle="grayBezel" id="q9k-9e-Bdd"/>
                     </imageView>
                     <button verticalHuggingPriority="750" id="pNb-nf-9ze">
-                        <rect key="frame" x="17" y="110" width="79" height="32"/>
+                        <rect key="frame" x="17" y="134" width="79" height="32"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <buttonCell key="cell" type="push" title="ロード" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="Rkb-q0-q1k">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -677,8 +672,84 @@
                             <action selector="onPushButton:" target="-1" id="KZC-8C-eWM"/>
                         </connections>
                     </button>
+                    <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" id="bso-4p-F5B">
+                        <rect key="frame" x="11" y="179" width="262" height="262"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageAlignment="topLeft" imageFrameStyle="grayBezel" id="TEe-SI-Tiw"/>
+                    </imageView>
+                    <button verticalHuggingPriority="750" id="lZ1-GS-iqc">
+                        <rect key="frame" x="308" y="18" width="66" height="32"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <buttonCell key="cell" type="push" title="保存" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="1Bc-NY-WA8">
+                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                            <font key="font" size="13" name="AquaKana"/>
+                        </buttonCell>
+                        <connections>
+                            <action selector="onPushButton:" target="-1" id="h2r-ER-439"/>
+                        </connections>
+                    </button>
+                    <tabView id="own-mW-oPT">
+                        <rect key="frame" x="271" y="55" width="348" height="400"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <font key="font" metaFont="system"/>
+                        <tabViewItems>
+                            <tabViewItem label="Tab" identifier="1" id="z8Y-nC-iOU">
+                                <view key="view" id="Pjp-hL-A5D">
+                                    <rect key="frame" x="10" y="33" width="328" height="354"/>
+                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                    <subviews>
+                                        <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" id="ARa-ZJ-8Wg">
+                                            <rect key="frame" x="14" y="92" width="262" height="262"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                            <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageAlignment="topLeft" imageScaling="proportionallyDown" imageFrameStyle="grayBezel" id="HTR-kZ-We4"/>
+                                        </imageView>
+                                        <slider verticalHuggingPriority="750" id="8dj-tP-utf">
+                                            <rect key="frame" x="15" y="58" width="96" height="21"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                            <sliderCell key="cell" state="on" alignment="left" maxValue="20" doubleValue="10" tickMarkPosition="above" sliderType="linear" id="aVD-fZ-vwC"/>
+                                            <connections>
+                                                <action selector="sliderChange:" target="-1" id="N9p-nI-WnJ"/>
+                                            </connections>
+                                        </slider>
+                                        <slider verticalHuggingPriority="750" id="g7P-E0-kKU">
+                                            <rect key="frame" x="15" y="21" width="96" height="21"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                            <sliderCell key="cell" state="on" alignment="left" maxValue="100" doubleValue="50" tickMarkPosition="above" sliderType="linear" id="Uax-pu-dCt"/>
+                                            <connections>
+                                                <action selector="sliderChange:" target="-1" id="7jI-5o-Ib9"/>
+                                            </connections>
+                                        </slider>
+                                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" id="ddx-Tb-eqq">
+                                            <rect key="frame" x="143" y="60" width="84" height="17"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                            <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="強さ" id="IPJ-EP-gFu">
+                                                <font key="font" size="13" name="AquaKana"/>
+                                                <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                            </textFieldCell>
+                                        </textField>
+                                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" id="ni3-Zc-vpM">
+                                            <rect key="frame" x="143" y="23" width="84" height="17"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                            <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="半径" id="IzR-op-AIc">
+                                                <font key="font" size="13" name="AquaKana"/>
+                                                <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                            </textFieldCell>
+                                        </textField>
+                                    </subviews>
+                                </view>
+                            </tabViewItem>
+                            <tabViewItem label="View" identifier="2" id="cEx-dh-Xof">
+                                <view key="view" id="n6D-u8-D9c">
+                                    <rect key="frame" x="10" y="33" width="328" height="354"/>
+                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                </view>
+                            </tabViewItem>
+                        </tabViewItems>
+                    </tabView>
                     <button verticalHuggingPriority="750" id="vjR-qr-gtb">
-                        <rect key="frame" x="281" y="110" width="79" height="32"/>
+                        <rect key="frame" x="392" y="18" width="79" height="32"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <buttonCell key="cell" type="push" title="ロード" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="eCR-LD-4Rj">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -688,24 +759,8 @@
                             <action selector="onPushButton:" target="-1" id="gzB-fn-RQR"/>
                         </connections>
                     </button>
-                    <slider verticalHuggingPriority="750" id="8dj-tP-utf">
-                        <rect key="frame" x="283" y="89" width="96" height="21"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                        <sliderCell key="cell" state="on" alignment="left" maxValue="20" doubleValue="10" tickMarkPosition="above" sliderType="linear" id="aVD-fZ-vwC"/>
-                        <connections>
-                            <action selector="sliderChange:" target="-1" id="N9p-nI-WnJ"/>
-                        </connections>
-                    </slider>
-                    <slider verticalHuggingPriority="750" id="g7P-E0-kKU">
-                        <rect key="frame" x="283" y="58" width="96" height="21"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                        <sliderCell key="cell" state="on" alignment="left" maxValue="100" doubleValue="50" tickMarkPosition="above" sliderType="linear" id="Uax-pu-dCt"/>
-                        <connections>
-                            <action selector="sliderChange:" target="-1" id="7jI-5o-Ib9"/>
-                        </connections>
-                    </slider>
                     <button verticalHuggingPriority="750" id="U6R-7i-Xe1">
-                        <rect key="frame" x="281" y="19" width="79" height="32"/>
+                        <rect key="frame" x="503" y="18" width="79" height="32"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <buttonCell key="cell" type="push" title="テスト" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="SGt-f7-Gfx">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -713,40 +768,6 @@
                         </buttonCell>
                         <connections>
                             <action selector="onPushButton:" target="-1" id="kJT-DA-ivl"/>
-                        </connections>
-                    </button>
-                    <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" id="bso-4p-F5B">
-                        <rect key="frame" x="11" y="155" width="262" height="262"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                        <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageAlignment="topLeft" imageFrameStyle="grayBezel" id="TEe-SI-Tiw"/>
-                    </imageView>
-                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" id="ddx-Tb-eqq">
-                        <rect key="frame" x="402" y="91" width="84" height="17"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="強さ" id="IPJ-EP-gFu">
-                            <font key="font" size="13" name="AquaKana"/>
-                            <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                        </textFieldCell>
-                    </textField>
-                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" id="ni3-Zc-vpM">
-                        <rect key="frame" x="402" y="60" width="84" height="17"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="半径" id="IzR-op-AIc">
-                            <font key="font" size="13" name="AquaKana"/>
-                            <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                        </textFieldCell>
-                    </textField>
-                    <button verticalHuggingPriority="750" id="lZ1-GS-iqc">
-                        <rect key="frame" x="449" y="110" width="66" height="32"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                        <buttonCell key="cell" type="push" title="保存" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="1Bc-NY-WA8">
-                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                            <font key="font" size="13" name="AquaKana"/>
-                        </buttonCell>
-                        <connections>
-                            <action selector="onPushButton:" target="-1" id="h2r-ER-439"/>
                         </connections>
                     </button>
                 </subviews>
