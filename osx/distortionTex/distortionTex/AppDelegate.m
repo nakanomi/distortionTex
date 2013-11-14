@@ -7,6 +7,8 @@
 //
 
 #import "AppDelegate.h"
+#include "vectorUtil.h"
+#include "matrixUtil.h"
 
 #define _RGB_CENTER	(128.0 / 255.0)
 
@@ -95,6 +97,7 @@
 }
 
 #pragma mark -Draw
+// 円形の歪みマップを描画
 - (BOOL)drawDistortionedImage
 {
 	BOOL result = NO;

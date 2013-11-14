@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		8A71AD4F18336356005063A9 /* transparent256x256.png in Resources */ = {isa = PBXBuildFile; fileRef = 8A71AD4E18336356005063A9 /* transparent256x256.png */; };
+		8A728BA818349F0B0078FD7F /* matrixUtil.c in Sources */ = {isa = PBXBuildFile; fileRef = 8A728B9F18349F0B0078FD7F /* matrixUtil.c */; };
+		8A728BAB18349F0B0078FD7F /* vectorUtil.c in Sources */ = {isa = PBXBuildFile; fileRef = 8A728BA518349F0B0078FD7F /* vectorUtil.c */; };
 		8A90690D18320430009B79C6 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8A90690C18320430009B79C6 /* Cocoa.framework */; };
 		8A90691718320430009B79C6 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 8A90691518320430009B79C6 /* InfoPlist.strings */; };
 		8A90691918320430009B79C6 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A90691818320430009B79C6 /* main.m */; };
@@ -34,6 +36,10 @@
 
 /* Begin PBXFileReference section */
 		8A71AD4E18336356005063A9 /* transparent256x256.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = transparent256x256.png; path = distortionTex/resource/transparent256x256.png; sourceTree = "<group>"; };
+		8A728B9F18349F0B0078FD7F /* matrixUtil.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = matrixUtil.c; sourceTree = "<group>"; };
+		8A728BA018349F0B0078FD7F /* matrixUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = matrixUtil.h; sourceTree = "<group>"; };
+		8A728BA518349F0B0078FD7F /* vectorUtil.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = vectorUtil.c; sourceTree = "<group>"; };
+		8A728BA618349F0B0078FD7F /* vectorUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = vectorUtil.h; sourceTree = "<group>"; };
 		8A90690918320430009B79C6 /* distortionTex.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = distortionTex.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8A90690C18320430009B79C6 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		8A90690F18320430009B79C6 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
@@ -77,6 +83,17 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		8A728B9B18349F0B0078FD7F /* glEssentialUtilSrc */ = {
+			isa = PBXGroup;
+			children = (
+				8A728B9F18349F0B0078FD7F /* matrixUtil.c */,
+				8A728BA018349F0B0078FD7F /* matrixUtil.h */,
+				8A728BA518349F0B0078FD7F /* vectorUtil.c */,
+				8A728BA618349F0B0078FD7F /* vectorUtil.h */,
+			);
+			path = glEssentialUtilSrc;
+			sourceTree = "<group>";
+		};
 		8A90690018320430009B79C6 = {
 			isa = PBXGroup;
 			children = (
@@ -120,6 +137,7 @@
 		8A90691218320430009B79C6 /* distortionTex */ = {
 			isa = PBXGroup;
 			children = (
+				8A728B9B18349F0B0078FD7F /* glEssentialUtilSrc */,
 				8A90691E18320430009B79C6 /* AppDelegate.h */,
 				8A90691F18320430009B79C6 /* AppDelegate.m */,
 				8A90692118320430009B79C6 /* MainMenu.xib */,
@@ -268,6 +286,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8A728BAB18349F0B0078FD7F /* vectorUtil.c in Sources */,
+				8A728BA818349F0B0078FD7F /* matrixUtil.c in Sources */,
 				8A90692018320430009B79C6 /* AppDelegate.m in Sources */,
 				8A90691918320430009B79C6 /* main.m in Sources */,
 			);
