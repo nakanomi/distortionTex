@@ -392,6 +392,7 @@
 {
 	NSLog(@"%s", __PRETTY_FUNCTION__);
 	NSSlider* slider = (NSSlider*)sender;
+	float value = [slider floatValue];
 	if ([sender isEqual:self.sliderPower]) {
 		NSLog(@"change power :%f", [slider floatValue]);
 		_power = [slider floatValue];
@@ -411,6 +412,15 @@
 		NSString* strRadius = [NSString stringWithFormat:@"半径:%f", _radius];
 		[self.lblRadius setObjectValue:strRadius];
 	}
+	else if ([sender isEqual:self.sliderHeight]) {
+		NSLog(@"change height: %f", value);
+	}
+	else if ([sender isEqual:self.sliderZPosition]) {
+		NSLog(@"change z position:%f", value);
+	}
+	NSTabViewItem* item = [self.tabViewDistortion selectedTabViewItem];
+	NSString* identifier = [item identifier];
+	NSLog(@"%@", identifier);
 }
 
 @end

@@ -693,7 +693,7 @@
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <font key="font" metaFont="system"/>
                         <tabViewItems>
-                            <tabViewItem label="Tab" identifier="1" id="z8Y-nC-iOU">
+                            <tabViewItem label="疑似球面" identifier="tabMakeCircle" id="z8Y-nC-iOU">
                                 <view key="view" id="Pjp-hL-A5D">
                                     <rect key="frame" x="10" y="33" width="328" height="354"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -740,10 +740,51 @@
                                     </subviews>
                                 </view>
                             </tabViewItem>
-                            <tabViewItem label="View" identifier="2" id="cEx-dh-Xof">
+                            <tabViewItem label="パース" identifier="tabMakePerse" id="cEx-dh-Xof">
                                 <view key="view" id="n6D-u8-D9c">
                                     <rect key="frame" x="10" y="33" width="328" height="354"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                    <subviews>
+                                        <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" id="7Ln-Vd-RfP">
+                                            <rect key="frame" x="14" y="92" width="262" height="262"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                            <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" imageFrameStyle="grayBezel" id="wNe-ZN-YMQ"/>
+                                        </imageView>
+                                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" id="cQg-bC-Gyk">
+                                            <rect key="frame" x="185" y="65" width="108" height="17"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                            <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="高さ" id="Sev-lC-FFE">
+                                                <font key="font" size="13" name="AquaKana"/>
+                                                <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                            </textFieldCell>
+                                        </textField>
+                                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" id="npo-Lb-YMr">
+                                            <rect key="frame" x="185" y="40" width="108" height="17"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                            <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="基準面のZ" id="p67-yD-rtB">
+                                                <font key="font" size="13" name="AquaKana"/>
+                                                <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                            </textFieldCell>
+                                        </textField>
+                                        <slider verticalHuggingPriority="750" id="fOw-Ka-cvh">
+                                            <rect key="frame" x="27" y="63" width="96" height="21"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                            <sliderCell key="cell" state="on" alignment="left" maxValue="100" doubleValue="50" tickMarkPosition="above" sliderType="linear" id="ov0-II-6ak"/>
+                                            <connections>
+                                                <action selector="sliderChange:" target="-1" id="QBm-ft-Fsq"/>
+                                            </connections>
+                                        </slider>
+                                        <slider verticalHuggingPriority="750" id="50G-dC-0hI">
+                                            <rect key="frame" x="27" y="38" width="96" height="21"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                            <sliderCell key="cell" state="on" alignment="left" maxValue="100" doubleValue="50" tickMarkPosition="above" sliderType="linear" id="dkR-Pa-RmL"/>
+                                            <connections>
+                                                <action selector="sliderChange:" target="-1" id="z7J-7y-KU5"/>
+                                            </connections>
+                                        </slider>
+                                    </subviews>
                                 </view>
                             </tabViewItem>
                         </tabViewItems>
@@ -779,13 +820,19 @@
                 <outlet property="btnLoadTestSource" destination="pNb-nf-9ze" id="hjV-Pp-zmy"/>
                 <outlet property="btnSave" destination="lZ1-GS-iqc" id="qTC-cC-szW"/>
                 <outlet property="btnTest" destination="U6R-7i-Xe1" id="Xi2-GR-HSw"/>
+                <outlet property="imgCellDistortionPerse" destination="wNe-ZN-YMQ" id="4PM-gG-Lb1"/>
                 <outlet property="imgViewDistortion" destination="ARa-ZJ-8Wg" id="Vmd-mD-ryA"/>
                 <outlet property="imgViewTestDest" destination="FIR-zF-N2i" id="w5u-va-Rp8"/>
                 <outlet property="imgcellTestSource" destination="TEe-SI-Tiw" id="txf-3T-vXg"/>
+                <outlet property="lblHeight" destination="cQg-bC-Gyk" id="YP2-WO-KdR"/>
                 <outlet property="lblPower" destination="ddx-Tb-eqq" id="gCo-Z5-qaq"/>
                 <outlet property="lblRadius" destination="ni3-Zc-vpM" id="grG-59-JBh"/>
+                <outlet property="lblZPosition" destination="npo-Lb-YMr" id="puq-b4-BEM"/>
+                <outlet property="sliderHeight" destination="fOw-Ka-cvh" id="DhV-cf-psP"/>
                 <outlet property="sliderPower" destination="8dj-tP-utf" id="gx3-Ep-qix"/>
                 <outlet property="sliderRadius" destination="g7P-E0-kKU" id="vqd-fr-dFG"/>
+                <outlet property="sliderZPosition" destination="50G-dC-0hI" id="Mtv-YX-hcj"/>
+                <outlet property="tabViewDistortion" destination="own-mW-oPT" id="tGj-ch-t3h"/>
                 <outlet property="window" destination="371" id="532"/>
             </connections>
         </customObject>
