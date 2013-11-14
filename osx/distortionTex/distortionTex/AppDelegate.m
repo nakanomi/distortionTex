@@ -26,6 +26,7 @@
 - (NSImage*)filterColorFromImage:(NSImage*)image retainColor:(NSString*)colorName;
 - (BOOL)drawDistortionedImage;
 - (NSImage*)drawCircle;
+- (NSImage*)drawPerse;
 - (NSString*)getCurTabIdentifier;
 - (NSImage*)createTemporaryImage;
 - (int)getCurTabIndex;
@@ -78,6 +79,7 @@ enum {
 		}
 	}
 	@catch (NSException *exception) {
+		NSLog(@"%s:exception:%@", __PRETTY_FUNCTION__, exception);
 	}
 	@finally {
 	}
@@ -153,7 +155,7 @@ enum {
 		result = tmpImage;
 	}
 	@catch (NSException *exception) {
-		NSLog(@"%s:%@", __PRETTY_FUNCTION__, exception);
+		NSLog(@"%s:exception:%@", __PRETTY_FUNCTION__, exception);
 	}
 	return result;
 }
@@ -295,6 +297,20 @@ enum {
 	}
 	return imageResult;
 }
+
+- (NSImage*)drawPerse
+{
+	NSImage* imageResult = nil;
+	@try {
+		
+	}
+	@catch (NSException *exception) {
+		NSLog(@"%s:exception:%@", __PRETTY_FUNCTION__, exception);
+	}
+
+	return imageResult;
+}
+
 #pragma mark -Test
 - (void)logMtx:(float*)mtx
 {
