@@ -25,12 +25,19 @@
 - (NSImage*)filterColorFromImage:(NSImage*)image retainColor:(NSString*)colorName;
 - (BOOL)drawDistortionedImage;
 - (NSImage*)drawCircle;
+- (NSString*)getCurTabIdentifier;
+- (int)getCurTabIndex;
 - (void)test;
 - (void)calcMtxMultiplyVec:(float*)vSrc matrix:(float*)mtx result:(float*)vResult;
 - (void)logMtx:(float*)mtx;
 @end
 #define _SIZE_WIDTH	256.0f
 #define _SIZE_HEIGHT	256.0f
+enum {
+	_TAB_CIRCLE = 0,
+	_TAB_PERSE,
+};
+
 @implementation AppDelegate
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
@@ -45,6 +52,13 @@
 	_power = [self.sliderPower floatValue];
 	_radius = [self.sliderRadius floatValue];
 	_posCenter = CGPointMake(128.0, 128.0);
+	{
+		int tabCount = (int)[self.tabViewDistortion.tabViewItems count];
+		for (int i = 0; i < tabCount; i++) {
+			NSTabViewItem* item = [self.tabViewDistortion.tabViewItems objectAtIndex:i];
+			NSLog(@"%@", item.identifier);
+		}
+	}
 }
 
 - (NSURL*)getFileUrlByOpenPanel
@@ -98,6 +112,33 @@
 	
 	return filteredImage;
 }
+#pragma mark -UI
+- (NSString*)getCurTabIdentifier
+{
+	NSTabViewItem* item = [self.tabViewDistortion selectedTabViewItem];
+	if (item == nil) {
+		return nil;
+	}
+	return item.identifier;
+}
+- (int)getCurTabIndex
+{
+	int result = -1;
+	NSString* strIdentifier = [self getCurTabIdentifier];
+	if (strIdentifier != nil) {
+		int count = (int)[self.tabViewDistortion.tabViewItems count];
+		for (int i = 0; i < count; i++) {
+			NSTabViewItem* item = [self.tabViewDistortion.tabViewItems objectAtIndex:i];
+			int compare = [strIdentifier compare:item.identifier];
+			if (compare == NSOrderedSame) {
+				result = i;
+				break;
+			}
+		}
+	}
+	return result;
+}
+
 
 #pragma mark -Draw
 // 円形の歪みマップを描画
@@ -299,25 +340,6 @@
 #pragma mark -Calc
 - (void)calcMtxMultiplyVec:(float*)vSrc matrix:(float*)mtx result:(float*)vResult
 {
-#if 0
-	float mtxFromVec[16];
-	for (int i = 0; i < 16; i++) {
-		mtxFromVec[i] = 0.0;
-	}
-	mtxLoadIdentity(mtxFromVec);
-	for (int i = 0; i < 3; i++) {
-		NSLog(@"%f", vSrc[i]);
-		mtxFromVec[i + 12] = vSrc[i];
-	}
-	mtxFromVec[15] = 1.0;
-	float mtxRet[16];
-	mtxMultiply(mtxRet, mtx, mtxFromVec);
-	[self logMtx:mtxRet];
-	for (int i = 0; i < 3; i++) {
-		vResult[i] = mtxRet[i + 12];
-	}
-	vResult[3] = 1.0;
-#else
 	for (int i = 0; i < 4; i++) {
 		float tmpVal = 0.0;
 		for (int j = 0; j < 4; j++) {
@@ -328,7 +350,6 @@
 		}
 		vResult[i] = tmpVal;
 	}
-#endif
 }
 
 #pragma mark -Event
@@ -421,6 +442,7 @@
 	NSTabViewItem* item = [self.tabViewDistortion selectedTabViewItem];
 	NSString* identifier = [item identifier];
 	NSLog(@"%@", identifier);
+	[self getCurTabIndex];
 }
 
 @end
