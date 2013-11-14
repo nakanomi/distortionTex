@@ -17,6 +17,7 @@
 	NSImage* _imgTestSource;
 	NSImage* _imgDistortion;
 	NSImage* _imgTestDest;
+	NSImage* _imgPerseSource;
 	float _power;
 	float _radius;
 	CGPoint _posCenter;
@@ -26,6 +27,7 @@
 - (BOOL)drawDistortionedImage;
 - (NSImage*)drawCircle;
 - (NSString*)getCurTabIdentifier;
+- (NSImage*)createTemporaryImage;
 - (int)getCurTabIndex;
 - (void)test;
 - (void)calcMtxMultiplyVec:(float*)vSrc matrix:(float*)mtx result:(float*)vResult;
@@ -46,6 +48,7 @@ enum {
 	_imgDistortion = nil;
 	_imgTestSource = nil;
 	_imgTestDest = nil;
+	_imgPerseSource = nil;
 	[self.imgViewDistortion setImageScaling:NSScaleNone];
 	[self.imgcellTestSource setImageScaling:NSScaleNone];
 	[self.imgViewTestDest setImageScaling:NSScaleNone];
@@ -139,6 +142,21 @@ enum {
 	return result;
 }
 
+#pragma mark -Utility
+- (NSImage*)createTemporaryImage
+{
+	NSImage* result = nil;
+	@try {
+		NSBundle* thisBundle = [NSBundle mainBundle];
+		NSString* filePath = [thisBundle pathForResource:@"white256x256" ofType:@"png"];
+		NSImage* tmpImage = [[NSImage alloc] initWithContentsOfFile:filePath];
+		result = tmpImage;
+	}
+	@catch (NSException *exception) {
+		NSLog(@"%s:%@", __PRETTY_FUNCTION__, exception);
+	}
+	return result;
+}
 
 #pragma mark -Draw
 // 円形の歪みマップを描画
@@ -157,9 +175,7 @@ enum {
 			CGSize size = _imgTestSource.size;
 			// 何かしらのイメージが無いとNSBitmapImageRepを取得できない
 			// サイズなどを動的にしたい場合は描画する必要がある
-			NSBundle* thisBundle = [NSBundle mainBundle];
-			NSString* filePath = [thisBundle pathForResource:@"white256x256" ofType:@"png"];
-			NSImage* tmpImage = [[NSImage alloc] initWithContentsOfFile:filePath];
+			NSImage* tmpImage = [self createTemporaryImage];
 			NSBitmapImageRep* outImageRep = [[NSBitmapImageRep alloc] initWithData:[tmpImage TIFFRepresentation]];
 			NSBitmapImageRep* inImageRep = [[NSBitmapImageRep alloc] initWithData:[_imgTestSource TIFFRepresentation]];
 			NSBitmapImageRep* distortionImageRep = [[NSBitmapImageRep alloc] initWithData:[_imgDistortion TIFFRepresentation]];
@@ -216,9 +232,7 @@ enum {
 	@try {
 		// 何かしらのイメージが無いとNSBitmapImageRepを取得できない
 		// サイズなどを動的にしたい場合は描画する必要がある
-		NSBundle* thisBundle = [NSBundle mainBundle];
-		NSString* filePath = [thisBundle pathForResource:@"transparent256x256" ofType:@"png"];
-		NSImage* tmpImage = [[NSImage alloc] initWithContentsOfFile:filePath];
+		NSImage* tmpImage = [self createTemporaryImage];
 		NSColor* color = nil;
 		NSBitmapImageRep* outImageRep = [[NSBitmapImageRep alloc] initWithData:[tmpImage TIFFRepresentation]];
 		[tmpImage lockFocus];
@@ -369,6 +383,16 @@ enum {
 	}
 	else if ([sender isEqual:self.btnLoadDistortion]) {
 		NSLog(@"load distortion");
+		if ([self getCurTabIndex] == _TAB_PERSE) {
+			if (_imgPerseSource != nil) {
+				_imgPerseSource = nil;
+			}
+			url = [self getFileUrlByOpenPanel];
+			if (url != nil) {
+				_imgPerseSource = [[NSImage alloc] initWithContentsOfURL:url];
+				[self.imgCellDistortionPerse setImage:_imgPerseSource];
+			}
+		}
 	}
 	else if ([sender isEqual:self.btnTest]) {
 		NSLog(@"test");
