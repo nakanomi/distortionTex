@@ -327,6 +327,7 @@ enum {
 				dist = sqrtf(dist);
 				if (dist < _radius) {
 					float percentage = (dist / _radius);
+					//float theta = asinf(percentage);
 					color = [NSColor colorWithCalibratedRed:percentage green:0.0 blue:0.0 alpha:1.0];
 					[outImageRep setColor:color atX:x y:y];
 					color = nil;
@@ -372,7 +373,6 @@ enum {
 			NSBitmapImageRep* distortionImageRep = [[NSBitmapImageRep alloc] initWithData:[_imgDistortion TIFFRepresentation]];
 			[tmpImage lockFocus];
 			float radius = _radius;
-			//float addRad = (_power / 180.0) * M_PI;
 			for (int y = 0; y < size.height; y++) {
 				for (int x = 0; x < size.width; x++) {
 					colSource = [inImageRep colorAtX:x y:y];
@@ -382,22 +382,38 @@ enum {
 						[colDistortion getRed:&r green:&g blue:&b alpha:&a];
 						if (a != 0.0) {
 							float percentage = r;
-							
+							BOOL bLog = NO;
+							if (percentage < 0.5) {
+								bLog = YES;
+							}
+
+							percentage *= percentage;
 							CGPoint vFromCenter;
 							vFromCenter.x = x - _posCenter.x;
 							vFromCenter.y = y - _posCenter.y;
-							float dist = percentage * radius;
-							vFromCenter.x /= dist;
-							vFromCenter.y /= dist;
-							vFromCenter.x *= (radius * percentage);
-							vFromCenter.y *= (radius * percentage);
-							/*
-							 NSLog(@"r:%f, g:%f, b:%f, offsetX:%f, offsetY:%f",
-							 r, g, b, offsetX, offsetY);
-							 */
-							colSource = [inImageRep colorAtX:(int)(_posCenter.x + vFromCenter.x)
-														   y:(int)(_posCenter.y + vFromCenter.y)];
-							//colSource = [NSColor redColor];
+							float dist = r * radius;
+							if (dist == 0.0) {
+								vFromCenter.x = 0.0;
+								vFromCenter.y = 0.0;
+							}
+							else {
+								vFromCenter.x /= dist;
+								vFromCenter.y /= dist;
+								vFromCenter.x *= (radius * percentage);
+								vFromCenter.y *= (radius * percentage);
+							}
+
+							float calcedX = _posCenter.x + vFromCenter.x;
+							float calcedY = _posCenter.y + vFromCenter.y;
+							if (bLog) {
+								/*
+								NSLog(@"x:%d, y:%d, dx:%f, dy:%f",
+									  x, y,
+									  (x - calcedX), (y - calcedY));
+								 */
+							}
+							colSource = [inImageRep colorAtX:(int)(calcedX)
+														   y:(int)(calcedY)];
 							
 						}
 						[outImageRep setColor:colSource atX:x y:y];
