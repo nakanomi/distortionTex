@@ -387,7 +387,7 @@ enum {
 								bLog = YES;
 							}
 
-							percentage *= percentage;
+							percentage = powf(percentage, 1.0 + (_power * 0.1));
 							CGPoint vFromCenter;
 							vFromCenter.x = x - _posCenter.x;
 							vFromCenter.y = y - _posCenter.y;
