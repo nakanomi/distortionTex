@@ -27,6 +27,9 @@
 - (BOOL)drawDistortionedImage;
 - (NSImage*)drawCircle;
 - (NSImage*)drawPerse;
+
+- (NSImage*)drawPolarCircle;
+- (BOOL)drawPolarDistortionedImage;
 - (NSString*)getCurTabIdentifier;
 - (NSImage*)createTemporaryImage;
 - (int)getCurTabIndex;
@@ -150,7 +153,8 @@ enum {
 	NSImage* result = nil;
 	@try {
 		NSBundle* thisBundle = [NSBundle mainBundle];
-		NSString* filePath = [thisBundle pathForResource:@"white256x256" ofType:@"png"];
+		// ここでアルファ付きのイメージを読み込まないと、作成するイメージがアルファチャンネル付きにならない？
+		NSString* filePath = [thisBundle pathForResource:@"transparent256x256" ofType:@"png"];
 		NSImage* tmpImage = [[NSImage alloc] initWithContentsOfFile:filePath];
 		result = tmpImage;
 	}
@@ -166,6 +170,9 @@ enum {
 {
 	BOOL result = NO;
 	@try {
+		{
+			return [self drawPolarDistortionedImage];
+		}
 		if (_imgTestDest != nil) {
 			_imgTestDest = nil;
 		}
@@ -297,6 +304,125 @@ enum {
 	}
 	return imageResult;
 }
+
+- (NSImage*)drawPolarCircle
+{
+	NSImage* imageResult = nil;
+	@try {
+		// 何かしらのイメージが無いとNSBitmapImageRepを取得できない
+		// サイズなどを動的にしたい場合は描画する必要がある
+		NSImage* tmpImage = [self createTemporaryImage];
+		NSColor* color = nil;
+		NSBitmapImageRep* outImageRep = [[NSBitmapImageRep alloc] initWithData:[tmpImage TIFFRepresentation]];
+		[tmpImage lockFocus];
+		CGSize size = tmpImage.size;
+		CGPoint posCur = CGPointMake(0, 0);
+		for (int y = 0; y < size.height; y++) {
+			for (int x = 0; x < size.width; x++) {
+				posCur.x = (float)x;
+				posCur.y = (float)y;
+				float distX = posCur.x - _posCenter.x;
+				float distY = posCur.y - _posCenter.y;
+				float dist = (distX * distX) + (distY * distY);
+				dist = sqrtf(dist);
+				if (dist < _radius) {
+					float percentage = (dist / _radius);
+					color = [NSColor colorWithCalibratedRed:percentage green:0.0 blue:0.0 alpha:1.0];
+					[outImageRep setColor:color atX:x y:y];
+					color = nil;
+				}
+				else {
+					color = [NSColor colorWithCalibratedRed:0.0 green:0.0 blue:0.0 alpha:0.0];
+					[outImageRep setColor:color atX:x y:y];
+					color = nil;
+				}
+			}
+		}
+		[tmpImage lockFocus];
+		imageResult = [[NSImage alloc] initWithCGImage:[outImageRep CGImage] size:size];
+		
+		tmpImage = nil;
+		outImageRep = nil;
+		color = nil;
+			
+	}
+	@catch (NSException *exception) {
+		NSLog(@"%s:exception:%@", __PRETTY_FUNCTION__, exception);
+	}
+	return imageResult;
+}
+- (BOOL)drawPolarDistortionedImage
+{
+	BOOL result = NO;
+	@try {
+		if (_imgTestDest != nil) {
+			_imgTestDest = nil;
+		}
+		if ((_imgTestSource != nil)&&(_imgDistortion != nil))
+		{
+			//
+			NSColor* colSource = [[NSColor alloc] init];
+			NSColor* colDistortion = [[NSColor alloc] init];
+			CGSize size = _imgTestSource.size;
+			// 何かしらのイメージが無いとNSBitmapImageRepを取得できない
+			// サイズなどを動的にしたい場合は描画する必要がある
+			NSImage* tmpImage = [self createTemporaryImage];
+			NSBitmapImageRep* outImageRep = [[NSBitmapImageRep alloc] initWithData:[tmpImage TIFFRepresentation]];
+			NSBitmapImageRep* inImageRep = [[NSBitmapImageRep alloc] initWithData:[_imgTestSource TIFFRepresentation]];
+			NSBitmapImageRep* distortionImageRep = [[NSBitmapImageRep alloc] initWithData:[_imgDistortion TIFFRepresentation]];
+			[tmpImage lockFocus];
+			float radius = _radius;
+			//float addRad = (_power / 180.0) * M_PI;
+			for (int y = 0; y < size.height; y++) {
+				for (int x = 0; x < size.width; x++) {
+					colSource = [inImageRep colorAtX:x y:y];
+					colDistortion = [distortionImageRep colorAtX:x y:y];
+					{
+						CGFloat a, r, g, b;
+						[colDistortion getRed:&r green:&g blue:&b alpha:&a];
+						if (a != 0.0) {
+							float percentage = r;
+							
+							CGPoint vFromCenter;
+							vFromCenter.x = x - _posCenter.x;
+							vFromCenter.y = y - _posCenter.y;
+							float dist = percentage * radius;
+							vFromCenter.x /= dist;
+							vFromCenter.y /= dist;
+							vFromCenter.x *= (radius * percentage);
+							vFromCenter.y *= (radius * percentage);
+							/*
+							 NSLog(@"r:%f, g:%f, b:%f, offsetX:%f, offsetY:%f",
+							 r, g, b, offsetX, offsetY);
+							 */
+							colSource = [inImageRep colorAtX:(int)(_posCenter.x + vFromCenter.x)
+														   y:(int)(_posCenter.y + vFromCenter.y)];
+							//colSource = [NSColor redColor];
+							
+						}
+						[outImageRep setColor:colSource atX:x y:y];
+					}
+				}
+			}
+			[tmpImage unlockFocus];
+			_imgTestDest = [[NSImage alloc] initWithCGImage:[outImageRep CGImage] size:size];
+			[self.imgViewTestDest setImage:_imgTestDest];
+			
+			tmpImage = nil;
+			outImageRep = nil;
+			distortionImageRep = nil;
+			inImageRep = nil;
+			colSource = nil;
+			colDistortion = nil;
+			result = YES;
+		}
+	}
+	@catch (NSException *exception) {
+		NSLog(@"%s:exception:%@", __PRETTY_FUNCTION__, exception);
+	}
+	return result;
+}
+
 
 - (NSImage*)drawPerse
 {
@@ -467,7 +593,8 @@ enum {
 		if (_imgDistortion != nil) {
 			_imgDistortion = nil;
 		}
-		_imgDistortion = [self drawCircle];
+		//_imgDistortion = [self drawCircle];
+		_imgDistortion = [self drawPolarCircle];
 		[self.imgViewDistortion setImage:_imgDistortion];
 		[self drawDistortionedImage];
 		NSString* strRadius = [NSString stringWithFormat:@"半径:%f", _radius];
