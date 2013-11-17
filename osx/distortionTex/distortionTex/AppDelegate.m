@@ -32,6 +32,7 @@
 - (BOOL)drawPowerDistortionedImage;
 - (NSString*)getCurTabIdentifier;
 - (NSImage*)createTemporaryImage;
+- (NSImage*)createTemporaryImageByResource:(NSString*)nameOfResource;
 - (int)getCurTabIndex;
 - (void)test;
 - (void)calcMtxMultiplyVec:(float*)vSrc matrix:(float*)mtx result:(float*)vResult;
@@ -65,6 +66,8 @@ enum {
 			NSTabViewItem* item = [self.tabViewDistortion.tabViewItems objectAtIndex:i];
 			NSLog(@"%@", item.identifier);
 		}
+		_imgTestSource = [self createTemporaryImageByResource:@"BG001-2"];
+		[self.imgcellTestSource setImage:_imgTestSource];
 	}
 }
 
@@ -148,19 +151,26 @@ enum {
 }
 
 #pragma mark -Utility
-- (NSImage*)createTemporaryImage
+- (NSImage*)createTemporaryImageByResource:(NSString*)nameOfResource
 {
 	NSImage* result = nil;
 	@try {
 		NSBundle* thisBundle = [NSBundle mainBundle];
 		// ここでアルファ付きのイメージを読み込まないと、作成するイメージがアルファチャンネル付きにならない？
-		NSString* filePath = [thisBundle pathForResource:@"transparent256x256" ofType:@"png"];
+		NSString* filePath = [thisBundle pathForResource:nameOfResource ofType:@"png"];
 		NSImage* tmpImage = [[NSImage alloc] initWithContentsOfFile:filePath];
 		result = tmpImage;
 	}
 	@catch (NSException *exception) {
 		NSLog(@"%s:exception:%@", __PRETTY_FUNCTION__, exception);
 	}
+	return result;
+}
+
+- (NSImage*)createTemporaryImage
+{
+	NSImage* result = nil;
+	result = [self createTemporaryImageByResource:@"transparent256x256"];
 	return result;
 }
 
