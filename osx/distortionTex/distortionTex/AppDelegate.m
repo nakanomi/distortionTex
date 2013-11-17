@@ -28,8 +28,8 @@
 - (NSImage*)drawCircle;
 - (NSImage*)drawPerse;
 
-- (NSImage*)drawPolarCircle;
-- (BOOL)drawPolarDistortionedImage;
+- (NSImage*)drawPercentageCircle;
+- (BOOL)drawPowerDistortionedImage;
 - (NSString*)getCurTabIdentifier;
 - (NSImage*)createTemporaryImage;
 - (int)getCurTabIndex;
@@ -171,7 +171,7 @@ enum {
 	BOOL result = NO;
 	@try {
 		{
-			return [self drawPolarDistortionedImage];
+			return [self drawPowerDistortionedImage];
 		}
 		if (_imgTestDest != nil) {
 			_imgTestDest = nil;
@@ -305,7 +305,7 @@ enum {
 	return imageResult;
 }
 
-- (NSImage*)drawPolarCircle
+- (NSImage*)drawPercentageCircle
 {
 	NSImage* imageResult = nil;
 	@try {
@@ -352,7 +352,7 @@ enum {
 	}
 	return imageResult;
 }
-- (BOOL)drawPolarDistortionedImage
+- (BOOL)drawPowerDistortionedImage
 {
 	BOOL result = NO;
 	@try {
@@ -610,7 +610,7 @@ enum {
 			_imgDistortion = nil;
 		}
 		//_imgDistortion = [self drawCircle];
-		_imgDistortion = [self drawPolarCircle];
+		_imgDistortion = [self drawPercentageCircle];
 		[self.imgViewDistortion setImage:_imgDistortion];
 		[self drawDistortionedImage];
 		NSString* strRadius = [NSString stringWithFormat:@"半径:%f", _radius];
