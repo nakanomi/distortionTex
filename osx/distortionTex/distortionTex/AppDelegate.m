@@ -337,8 +337,12 @@ enum {
 				dist = sqrtf(dist);
 				if (dist < _radius) {
 					float percentage = (dist / _radius);
+					distX /= dist * 2.0;
+					distY /= dist * 2.0;
+					distX += 0.5;
+					distY += 0.5;
 					//float theta = asinf(percentage);
-					color = [NSColor colorWithCalibratedRed:percentage green:0.0 blue:0.0 alpha:1.0];
+					color = [NSColor colorWithCalibratedRed:percentage green:distX blue:distY alpha:1.0];
 					[outImageRep setColor:color atX:x y:y];
 					color = nil;
 				}
@@ -399,16 +403,14 @@ enum {
 
 							percentage = powf(percentage, 1.0 + (_power * 0.1));
 							CGPoint vFromCenter;
-							vFromCenter.x = x - _posCenter.x;
-							vFromCenter.y = y - _posCenter.y;
 							float dist = r * radius;
+							vFromCenter.x = (g - 0.5) * 2.0;
+							vFromCenter.y = (b - 0.5) * 2.0;
 							if (dist == 0.0) {
 								vFromCenter.x = 0.0;
 								vFromCenter.y = 0.0;
 							}
 							else {
-								vFromCenter.x /= dist;
-								vFromCenter.y /= dist;
 								vFromCenter.x *= (radius * percentage);
 								vFromCenter.y *= (radius * percentage);
 							}
